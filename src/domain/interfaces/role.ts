@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
-export interface IUnitMeasure {
+export interface IRole {
   id: number;
   name: string;
   state: boolean;
@@ -8,14 +8,15 @@ export interface IUnitMeasure {
   updated_at: Date;
 }
 
-export class IUnitMeasureCreateDto {
+export class IRoleCreateDto {
   @IsString()
-  @IsNotEmpty({ message: 'El nombre es requerido' })
+  @IsNotEmpty({ message: 'Nombre de rol es requerido' })
   name: string;
 }
-export class IUnitMeasureUpdateDto {
+
+export class IRoleUpdateDto {
   @IsNumber()
-  @IsNotEmpty({ message: 'El ID es requerido' })
+  @IsNotEmpty({ message: 'ID es requerido' })
   id: number;
 
   @IsString()
