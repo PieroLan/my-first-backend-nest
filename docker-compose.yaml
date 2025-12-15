@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:14.3
+    container_name: postgres_app_nest
+    restart: always
+    ports:
+      - "${PORT_DB}:5432"
+    environment:
+      POSTGRES_DB: ${DATABASE_DB}
+      POSTGRES_USER: ${USER_DB}
+      POSTGRES_PASSWORD: ${PASSWORD_DB}
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
