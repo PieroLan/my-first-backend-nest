@@ -5,6 +5,7 @@ import {
   IUserCreateDto,
   IUserUpdateDto,
 } from 'src/domain/interfaces/user';
+import * as bcrypt from 'bcrypt';
 import { UserRepositoryImpl } from 'src/domain/repository/impl/user.repository.impl';
 import { EntityFormatter } from 'src/helpers/format/entity-format.service';
 
@@ -25,10 +26,15 @@ export class UserService {
   }
 
   async create(data: IUserCreateDto): Promise<IUser> {
-    if (!data.role_id) {
-      data.role_id = 2;
+    const {password, ...userData} = data;
+    if (!userData.role_id) {
+      userData.role_id = 2;
     }
-    const userFormatted = EntityFormatter.format(data, UserEntity, {
+    const user = {
+      ...userData,
+      password: bcrypt.hashSync(password, 10),
+    }
+    const userFormatted = EntityFormatter.format(user, UserEntity, {
       role_id: 'role',
     });
     return await this.userRepository.save(userFormatted);
