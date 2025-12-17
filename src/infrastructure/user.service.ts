@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserEntity } from 'src/domain/entity';
 import {
   IUser,
@@ -11,7 +11,7 @@ import { EntityFormatter } from 'src/helpers/format/entity-format.service';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly userRepository: UserRepositoryImpl) {}
+  constructor(private readonly userRepository: UserRepositoryImpl) { }
 
   async findAll(): Promise<IUser[]> {
     return this.userRepository.findAll();
@@ -25,11 +25,23 @@ export class UserService {
     return data;
   }
 
+  async findByEmail(email: string): Promise<IUser> {
+    return await this.userRepository.findOneByEmail(email);
+  }
+
   async create(data: IUserCreateDto): Promise<IUser> {
-    const {password, ...userData} = data;
+    const { password, ...userData } = data;
+    const existingUser  = await this.findByEmail(data.email);
+
+    if (existingUser) {
+      throw new HttpException('Ya existe una cuenta con este correo', HttpStatus.BAD_REQUEST);
+    }
+
+    //Solo si el registro se por fuera del sistema y no por un admin
     if (!userData.role_id) {
       userData.role_id = 2;
     }
+
     const user = {
       ...userData,
       password: bcrypt.hashSync(password, 10),

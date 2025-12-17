@@ -9,7 +9,11 @@ export class UserRepositoryImpl implements IUserRepository {
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
-  ) {}
+  ) { }
+  
+  findOneByEmail(email: string): Promise<UserEntity> {
+    return this.userRepository.findOne({ where: { email }, select: { email: true, password: true } });
+  }
 
   async findAll(): Promise<UserEntity[]> {
     return this.userRepository.find({ where: { state: true } });

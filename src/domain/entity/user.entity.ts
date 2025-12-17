@@ -14,10 +14,10 @@ export class UserEntity {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
-  @Column({ type: 'varchar', length: 20, unique: true })
-  user_name: string;
-
   @Column({ type: 'varchar', length: 20 })
+  email: string;
+
+  @Column({ type: 'varchar', length: 20, select: false }) // el select en false es para que no se muestre la contraseña en las consultas
   password: string;
 
   @Column({ name: 'is_active', type: 'boolean', default: false })
