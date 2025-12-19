@@ -12,6 +12,7 @@ export interface IUser {
   id: number;
   password: string;
   email: string;
+  isActive: boolean;
   role: IRole;
   state: boolean;
   created_at: Date;

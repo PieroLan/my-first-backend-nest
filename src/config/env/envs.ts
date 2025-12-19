@@ -7,5 +7,5 @@ export const envs = {
   USER_DB: get('USER_DB').required().asString(),
   PASSWORD_DB: get('PASSWORD_DB').required().asString(),
   DATABASE_DB: get('DATABASE_DB').required().asString(),
-  HOST: get('HOST').required().asString()
+  HOST: get('HOST').required().asString(),
 };
