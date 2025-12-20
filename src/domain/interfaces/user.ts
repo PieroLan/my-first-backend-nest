@@ -3,7 +3,6 @@ import {
   IsNumber,
   IsOptional,
   IsString,
-  Matches,
   MinLength,
 } from 'class-validator';
 import { IRole } from './role';

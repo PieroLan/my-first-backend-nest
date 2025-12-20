@@ -9,7 +9,6 @@ import { UnitMeasureModule } from './presentation/unit-measure/unit-measure.modu
 import { RoleModule } from './presentation/role/role.module';
 import { UserModule } from './presentation/user/user.module';
 import { AuthModule } from './presentation/auth/auth.module';
-import { AuthController } from './presentation/auth/auth.controller';
 
 @Module({
   imports: [

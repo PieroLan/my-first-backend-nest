@@ -1,13 +1,6 @@
 import { IsEmail, IsNotEmpty, IsNumber, IsOptional, IsString, Matches, MinLength } from "class-validator";
 
 export class IUserRegisterDto {
-    @IsString()
-    @IsNotEmpty({ message: 'Nombre de usuario es requerido' })
-    @Matches(/^[a-z0-9_-]+$/, {
-        message:
-            'El nombre de usuario solo puede contener letras minúsculas, números, guiones y guiones bajos.',
-    })
-    user_name: string;
 
     @IsString()
     @IsNotEmpty({ message: 'Contraseña requerida' })
@@ -26,13 +19,6 @@ export class IUserRegisterDto {
 
 
 export class IUserLoginDto {
-    @IsString()
-    @IsOptional()
-    @Matches(/^[a-z0-9_-]+$/, {
-        message:
-            'El nombre de usuario solo puede contener letras minúsculas, números, guiones y guiones bajos.',
-    })
-    user_name?: string;
 
     @IsString()
     @IsEmail()

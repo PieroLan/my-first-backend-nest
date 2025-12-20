@@ -15,6 +15,7 @@ import { IBrandCreateDto, IBrandUpdateDto } from 'src/domain/interfaces/brand';
 export class BrandController {
   constructor(private readonly brandService: BrandService) {}
 
+
   @Get()
   async findAll() {
     const data = await this.brandService.findAll();

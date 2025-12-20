@@ -1,4 +1,5 @@
-import { Body, Controller, HttpStatus, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Post, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { IUserLoginDto, IUserRegisterDto } from 'src/domain/interfaces/auth';
 import { AuthService } from 'src/infrastructure/auth.service';
 
@@ -6,7 +7,7 @@ import { AuthService } from 'src/infrastructure/auth.service';
 export class AuthController {
     constructor(private readonly authService: AuthService) { }
 
-    @Post()
+    @Post('register')
     async register(@Body() user: IUserRegisterDto) {
         const data = await this.authService.register(user);
         return {
@@ -16,7 +17,7 @@ export class AuthController {
         };
     }
 
-    @Post()
+    @Post("login")
     async login(@Body() user: IUserLoginDto) {
         const data = await this.authService.login(user);
         return {
@@ -25,4 +26,14 @@ export class AuthController {
             data: data,
         };
     }
+
+    @Get('private')
+    @UseGuards(AuthGuard())
+    testPrivateRoute() {
+        return {
+            status: HttpStatus.OK,
+            message: 'Ruta privada accedida',
+        };
+    }
+
 }

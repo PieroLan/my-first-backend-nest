@@ -12,7 +12,7 @@ export class UserRepositoryImpl implements IUserRepository {
   ) { }
   
   findOneByEmail(email: string): Promise<UserEntity> {
-    return this.userRepository.findOne({ where: { email }, select: { email: true, password: true, isActive: true } });
+    return this.userRepository.findOne({ where: { email }, select: { id:true, email: true, password: true, isActive: true } });
   }
 
   async findAll(): Promise<UserEntity[]> {

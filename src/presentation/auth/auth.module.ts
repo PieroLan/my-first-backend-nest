@@ -9,7 +9,7 @@ import { JwtStrategy } from 'src/config/strategies/jwt.strategy';
 
 @Module({
     imports: [UserModule,
-        ConfigService,
+        ConfigModule,
         // Configuración de JWT
         PassportModule.register({ defaultStrategy: 'jwt' }),
 
