@@ -1,6 +1,8 @@
-import { Body, Controller, Get, HttpStatus, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { IUserLoginDto, IUserRegisterDto } from 'src/domain/interfaces/auth';
+import { IUser } from 'src/domain/interfaces/user';
+import { GetUser } from 'src/helpers/decorators/get-user.decorator';
 import { AuthService } from 'src/infrastructure/auth.service';
 
 @Controller('auth')
@@ -29,11 +31,15 @@ export class AuthController {
 
     @Get('private')
     @UseGuards(AuthGuard())
-    testPrivateRoute() {
+    testPrivateRoute(
+        @GetUser() user: IUser,
+        @GetUser('email') email: String,
+    ) {
         return {
             status: HttpStatus.OK,
-            message: 'Ruta privada accedida',
+            message: 'Ruta privada',
+            user: user,
+            email: email,
         };
     }
-
 }

@@ -33,7 +33,7 @@ export class AuthService {
                 isActive: user.isActive,
                 role: user.role,
             },
-            token: this.getJwtToken({ email: user.email })
+            token: this.getJwtToken({ id: user.id })
         };
     }
 
@@ -48,7 +48,7 @@ export class AuthService {
                 isActive: userCreate.isActive,
                 role: userCreate.role,
             },
-            token: this.getJwtToken({ email: userCreate.email })
+            token: this.getJwtToken({ id: userCreate.id })
         };
     }
 

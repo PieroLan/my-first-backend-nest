@@ -20,7 +20,7 @@ export class UserRepositoryImpl implements IUserRepository {
   }
 
   async findOne(id: number): Promise<UserEntity> {
-    return this.userRepository.findOne({ where: { id } });
+    return this.userRepository.findOne({ where: { id }, select: { id:true, email: true, isActive: true }});
   }
 
   async save(user: UserEntity): Promise<UserEntity> {
