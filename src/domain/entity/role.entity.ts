@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { UserEntity } from './user.entity';
+import { UserRoleEntity } from './user_role.entity';
 
 @Entity('role')
 export class RoleEntity {
@@ -33,6 +33,6 @@ export class RoleEntity {
   })
   updated_at: Date;
 
-  @OneToMany(() => UserEntity, (user) => user.role)
-  users: UserEntity[];
+  @OneToMany(() => UserRoleEntity, (user_role) => user_role.role)
+  user_roles: UserRoleEntity[];
 }

@@ -9,6 +9,7 @@ import { UnitMeasureModule } from './presentation/unit-measure/unit-measure.modu
 import { RoleModule } from './presentation/role/role.module';
 import { UserModule } from './presentation/user/user.module';
 import { AuthModule } from './presentation/auth/auth.module';
+import { UserRoleModule } from './presentation/user-role/user-role.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { AuthModule } from './presentation/auth/auth.module';
     RoleModule,
     UserModule,
     AuthModule,
+    UserRoleModule,
   ],
   controllers: [],
   providers: [],

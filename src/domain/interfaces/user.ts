@@ -1,18 +1,17 @@
 import {
+  IsArray,
   IsNotEmpty,
   IsNumber,
   IsOptional,
   IsString,
   MinLength,
 } from 'class-validator';
-import { IRole } from './role';
 
 export interface IUser {
   id: number;
   password: string;
   email: string;
   isActive: boolean;
-  role: IRole;
   state: boolean;
   created_at: Date;
   updated_at: Date;
@@ -29,9 +28,10 @@ export class IUserCreateDto {
   @IsNotEmpty({ message: "Email es requeridos" })
   email: string;
 
-  @IsNumber()
   @IsOptional()
-  role_id?: number;
+  @IsArray({message: "Los roles deben enviarse como un arreglo"})
+  @IsNumber({}, { each: true, message: 'Cada rol debe ser un número' })
+  role_id?: number[];
 }
 
 export class IUserUpdateDto {

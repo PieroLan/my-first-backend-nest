@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsNumber, IsOptional, IsString, Matches, MinLength } from "class-validator";
+import { IsArray, IsEmail, IsNotEmpty, IsNumber, IsOptional, IsString, Matches, MinLength } from "class-validator";
 
 export class IUserRegisterDto {
 
@@ -12,9 +12,10 @@ export class IUserRegisterDto {
     @IsNotEmpty({ message: 'El email es requerido' })
     email: string;
 
-    @IsNumber()
-    @IsOptional()
-    role_id?: number;
+  @IsOptional()
+  @IsArray({message: "Los roles deben enviarse como un arreglo"})
+  @IsNumber({}, { each: true, message: 'Cada rol debe ser un número' })
+  role_id?: number[];
 }
 
 

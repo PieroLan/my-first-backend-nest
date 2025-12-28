@@ -6,10 +6,11 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { RoleEntity } from './role.entity';
+import { UserRoleEntity } from './user_role.entity';
 
 @Entity('user')
 export class UserEntity {
@@ -40,7 +41,6 @@ export class UserEntity {
   })
   updated_at: Date;
 
-  @ManyToOne(() => RoleEntity, (role) => role.users, { eager: true })
-  @JoinColumn({ name: 'role_id' })
-  role: RoleEntity;
+  @OneToMany(() => UserRoleEntity, (user_role) => user_role.user)
+  user_roles: UserRoleEntity[];
 }

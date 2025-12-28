@@ -31,13 +31,14 @@ export class AuthService {
                 id: user.id,
                 email: user.email,
                 isActive: user.isActive,
-                role: user.role,
+                // role: user.role,
             },
             token: this.getJwtToken({ id: user.id })
         };
     }
 
     async register(data: IUserRegisterDto) {
+        data.role_id = [2]
         const userCreate = await this.userService.create(data);
 
         // devuelve el usuario y el token
@@ -46,7 +47,7 @@ export class AuthService {
                 id: userCreate.id,
                 email: userCreate.email,
                 isActive: userCreate.isActive,
-                role: userCreate.role,
+                // role: userCreate.role,
             },
             token: this.getJwtToken({ id: userCreate.id })
         };

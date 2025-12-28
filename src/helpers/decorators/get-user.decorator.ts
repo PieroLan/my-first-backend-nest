@@ -14,11 +14,7 @@ export const GetUser = createParamDecorator(
             throw new InternalServerErrorException('No se pudo obtener el usuario - GetUser Decorator');
         }
 
-        // si nos mandan argumentos 
-        if (data) {
-            return user[data];
-        }
-
-        return user;
+        // si nos mandan argumentos data, retornamos solo esa propiedad del usuario
+        return data ? user[data] : user;
     }
 )

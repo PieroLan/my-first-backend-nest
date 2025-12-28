@@ -5,12 +5,14 @@ import { IUser } from "src/domain/interfaces/user";
 import { ConfigService } from "@nestjs/config";
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { UserService } from "src/infrastructure/user.service";
+import { UserRoleService } from "src/infrastructure/user_role.service";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
 
   constructor(
     private readonly userService: UserService,
+    private readonly userRoleService: UserRoleService,
     configService: ConfigService,
   ) {
     super({
@@ -20,17 +22,21 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   // se ejecuta si el JWT no a expirado y si la firma es valida
-  async validate(payload: JwtPayload): Promise<IUser> {
+  async validate(payload: JwtPayload) {
     const { id } = payload;
-    const user = await this.userService.findOne(id);
-    if (! user) {
+    const userFound = await this.userService.findOne(id);
+    if (! userFound) {
       throw new UnauthorizedException('Token no valido');
     }
 
-    if(! user.isActive){
+    if(! userFound.isActive){
       throw new UnauthorizedException('Usuario inactivo');
     }
-
+    const roles = await this.userRoleService.findRolesByUserId(id)
+    const user ={
+      ...userFound,
+      roles: roles
+    }
     return user;
   }
 }

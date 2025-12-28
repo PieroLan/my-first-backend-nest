@@ -7,11 +7,16 @@ import {
 } from 'src/domain/interfaces/user';
 import * as bcrypt from 'bcrypt';
 import { UserRepositoryImpl } from 'src/domain/repository/impl/user.repository.impl';
+import { DataSource } from 'typeorm'; // importante para transacciones (manager)
 import { EntityFormatter } from 'src/helpers/format/entity-format.service';
+import { UserRoleService } from './user_role.service';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly userRepository: UserRepositoryImpl) { }
+  constructor(private readonly userRepository: UserRepositoryImpl,
+    private readonly userRoleService: UserRoleService,
+    private readonly dataSource: DataSource
+  ) { }
 
   async findAll(): Promise<IUser[]> {
     return this.userRepository.findAll();
@@ -30,26 +35,29 @@ export class UserService {
   }
 
   async create(data: IUserCreateDto): Promise<IUser> {
-    const { password, ...userData } = data;
-    const existingUser  = await this.findByEmail(data.email);
+    return await this.dataSource.transaction(async (manager) => {
+      const { password, ...userData } = data;
+      const existingUser = await this.findByEmail(data.email);
 
-    if (existingUser) {
-      throw new HttpException('Ya existe una cuenta con este correo', HttpStatus.BAD_REQUEST);
-    }
+      if (existingUser) {
+        throw new HttpException('Ya existe una cuenta con este correo', HttpStatus.BAD_REQUEST);
+      }
 
-    //Solo si el registro se por fuera del sistema y no por un admin
-    if (!userData.role_id) {
-      userData.role_id = 2;
-    }
-
-    const user = {
-      ...userData,
-      password: bcrypt.hashSync(password, 10),
-    }
-    const userFormatted = EntityFormatter.format(user, UserEntity, {
-      role_id: 'role',
+      const user = {
+        ...userData,
+        password: bcrypt.hashSync(password, 10),
+      }
+      const userFormatted = EntityFormatter.format(user, UserEntity);
+      const userSaved = await manager.save(UserEntity, userFormatted);
+      for (const role of data.role_id) {
+        let userRole = {
+          role_id: role,
+          user_id: userSaved.id
+        }
+        await this.userRoleService.create(userRole, manager);
+      }
+      return userSaved;
     });
-    return await this.userRepository.save(userFormatted);
   }
 
   async update(data: IUserUpdateDto): Promise<IUser> {
