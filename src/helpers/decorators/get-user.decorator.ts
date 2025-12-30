@@ -1,4 +1,5 @@
 import { createParamDecorator, ExecutionContext, InternalServerErrorException } from "@nestjs/common";
+import { IUserJwtReturn } from "src/config/strategies/interfaces/user-jwt-return.interface";
 
 
 // la funcion createParamDecorator recibe un callback
@@ -7,7 +8,7 @@ export const GetUser = createParamDecorator(
 
         // obtenemos al usario verificado
         const req = ctx.switchToHttp().getRequest();
-        const user = req.user;
+        const user = req.user as IUserJwtReturn;
 
         // si el usuario no existe lanzamos un error
         if (!user) {
