@@ -8,6 +8,9 @@ import { GetUser } from 'src/helpers/decorators/get-user.decorator';
 import { RowHeaders } from 'src/helpers/decorators/row-hearders.decorator';
 import { AuthService } from 'src/infrastructure/auth.service';
 import { UserRoleGuard } from './guards/user-role.guard';
+import { RoleProtected } from 'src/helpers/decorators/role-protected.decorator';
+import { ValidRoles } from 'src/config/strategies/interfaces/valid-roles';
+import { Auth } from 'src/helpers/decorators/auth.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -54,13 +57,37 @@ export class AuthController {
     @SetMetadata('roles', ['admin'])
     testPrivateRoute2(
         @GetUser() user: IUser,
-        @GetUserRoles() roles: IUserRole[]
     ) {
         return {
             status: HttpStatus.OK,
             message: "Ruta privada 2",
-            user: user,
-            roles: roles
+            user: user
+        }
+    }
+
+    @Get('private3')
+    @UseGuards(AuthGuard(), UserRoleGuard)
+    @RoleProtected(ValidRoles.admin) // decorador personalizado
+    testPrivateRoute3(
+        @GetUser() user: IUser,
+    ) {
+        return {
+            status: HttpStatus.OK,
+            message: "Ruta privada 2",
+            user: user
+        }
+    }
+
+
+    @Get('private4')
+    @Auth(ValidRoles.admin)
+    testPrivateRoute4(
+        @GetUser() user: IUser,
+    ) {
+        return {
+            status: HttpStatus.OK,
+            message: "Ruta privada 2",
+            user: user
         }
     }
 }

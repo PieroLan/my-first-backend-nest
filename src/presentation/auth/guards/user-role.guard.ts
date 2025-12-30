@@ -1,7 +1,7 @@
 import { BadRequestException, CanActivate, ExecutionContext, ForbiddenException, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
-import { IUser } from 'src/domain/interfaces/user';
+import { META_ROLES } from 'src/helpers/decorators/role-protected.decorator';
 
 @Injectable()
 export class UserRoleGuard implements CanActivate {
@@ -14,7 +14,7 @@ export class UserRoleGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
 
     //extraigo metadata de los roles que tienen acceso a dicha ruta
-    const validRoles: string[] = this.reflector.get('roles', context.getHandler());
+    const validRoles: string[] = this.reflector.get(META_ROLES, context.getHandler());
 
     //extraemos al usuario validado por el UserGuard que hemos configurado en la strategia de JWT
     const req = context.switchToHttp().getRequest();

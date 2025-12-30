@@ -10,8 +10,11 @@ import {
 } from '@nestjs/common';
 import { BrandService } from 'src/infrastructure/brand.service';
 import { IBrandCreateDto, IBrandUpdateDto } from 'src/domain/interfaces/brand';
+import { Auth } from 'src/helpers/decorators/auth.decorator';
+
 
 @Controller('brand')
+@Auth()
 export class BrandController {
   constructor(private readonly brandService: BrandService) {}
 
