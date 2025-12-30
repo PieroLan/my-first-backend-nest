@@ -73,7 +73,7 @@ services:
 
 ### 1️⃣ Clonar el repositorio
 ```bash
-git clone <url-del-repositorio>
+git clone https://github.com/PieroLan/my-first-backend-nest.git
 cd proyecto
 ```
 ### 2️⃣ Instalar dependencias
