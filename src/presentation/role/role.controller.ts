@@ -8,10 +8,13 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
+import { ValidRoles } from 'src/config/strategies/interfaces/valid-roles';
 import { IRoleCreateDto, IRoleUpdateDto } from 'src/domain/interfaces/role';
+import { Auth } from 'src/helpers/decorators/auth.decorator';
 import { RoleService } from 'src/infrastructure/role.service';
 
 @Controller('role')
+@Auth(ValidRoles.admin)
 export class RoleController {
   constructor(private readonly roleService: RoleService) {}
 

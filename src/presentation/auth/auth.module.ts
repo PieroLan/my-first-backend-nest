@@ -30,6 +30,6 @@ import { UserRoleGuard } from './guards/user-role.guard';
     ],
     providers: [JwtStrategy, AuthService, UserRoleGuard],
     controllers: [AuthController],
-    exports: [JwtStrategy, AuthService, PassportModule, JwtModule],
+    exports: [JwtStrategy, AuthService, PassportModule, JwtModule, UserRoleGuard],
 })
 export class AuthModule { }

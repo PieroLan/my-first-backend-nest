@@ -6,6 +6,7 @@ import { ConfigService } from "@nestjs/config";
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { UserService } from "src/infrastructure/user.service";
 import { UserRoleService } from "src/infrastructure/user_role.service";
+import { IUserJwtReturn } from "./interfaces/user-jwt-return.interface";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -22,7 +23,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   // se ejecuta si el JWT no a expirado y si la firma es valida
-  async validate(payload: JwtPayload) {
+  async validate(payload: JwtPayload): Promise<IUserJwtReturn>{
     const { id } = payload;
     const userFound = await this.userService.findOne(id);
     if (! userFound) {

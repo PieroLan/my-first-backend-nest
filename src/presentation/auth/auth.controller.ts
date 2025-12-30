@@ -36,6 +36,8 @@ export class AuthController {
         };
     }
 
+
+    // estas son rutas de pruebas //
     @Get('private')
     @UseGuards(AuthGuard())
     testPrivateRoute(
