@@ -36,9 +36,9 @@ PORT=3001
 HOST=localhost
 
 PORT_DB=5432
-USER_DB=piero
+USER_DB=nombre_user
 PASSWORD_DB=qwe123$
-DATABASE_DB=app_nest
+DATABASE_DB=nombre_bd
 
 
 JWT_SECRET=mi_clave_secreta_jwt
@@ -74,7 +74,7 @@ services:
 ### 1️⃣ Clonar el repositorio
 ```bash
 git clone https://github.com/PieroLan/my-first-backend-nest.git
-cd proyecto
+cd my-first-backend-nest
 ```
 ### 2️⃣ Instalar dependencias
 ```bash
