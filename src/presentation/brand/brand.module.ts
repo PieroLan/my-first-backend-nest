@@ -4,11 +4,11 @@ import { BrandService } from 'src/infrastructure/brand.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BrandEntity } from 'src/domain/entity';
 import { BrandRepositoryImpl } from 'src/domain/repository/impl/brand.repository.impl';
-import { AuthModule } from '../auth/auth.module';
+import { AuthCommonModule } from 'src/common/auth/auth-common.module';
 
 @Module({
   controllers: [BrandController],
-  imports: [TypeOrmModule.forFeature([BrandEntity]), AuthModule],
+  imports: [TypeOrmModule.forFeature([BrandEntity]), AuthCommonModule],
   providers: [BrandService, BrandRepositoryImpl],
   exports: [BrandService],
 })

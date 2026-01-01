@@ -8,9 +8,9 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { ValidRoles } from 'src/config/strategies/interfaces/valid-roles';
+import { ValidRoles } from 'src/common/constants/valid-roles';
 import { IRoleCreateDto, IRoleUpdateDto } from 'src/domain/interfaces/role';
-import { Auth } from 'src/helpers/decorators/auth.decorator';
+import { Auth } from 'src/common/auth/decorators/auth.decorator';
 import { RoleService } from 'src/infrastructure/role.service';
 
 @Controller('role')

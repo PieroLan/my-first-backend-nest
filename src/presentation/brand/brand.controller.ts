@@ -10,11 +10,12 @@ import {
 } from '@nestjs/common';
 import { BrandService } from 'src/infrastructure/brand.service';
 import { IBrandCreateDto, IBrandUpdateDto } from 'src/domain/interfaces/brand';
-import { Auth } from 'src/helpers/decorators/auth.decorator';
+import { Auth } from 'src/common/auth/decorators/auth.decorator';
+import { ValidRoles } from 'src/common/constants/valid-roles';
 
 
 @Controller('brand')
-@Auth()
+@Auth(ValidRoles.admin, ValidRoles.user)
 export class BrandController {
   constructor(private readonly brandService: BrandService) {}
 

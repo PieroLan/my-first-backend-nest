@@ -1,8 +1,8 @@
 import { BadRequestException, CanActivate, ExecutionContext, ForbiddenException, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
-import { IUserJwtReturn } from 'src/config/strategies/interfaces/user-jwt-return.interface';
-import { META_ROLES } from 'src/helpers/decorators/role-protected.decorator';
+import { IUserJwtReturn } from 'src/common/interfaces/jwt/user-jwt-return.interface';
+import { META_ROLES } from 'src/common/auth/decorators/role-protected.decorator';
 
 @Injectable()
 export class UserRoleGuard implements CanActivate {

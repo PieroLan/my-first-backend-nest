@@ -3,14 +3,14 @@ import { AuthGuard } from '@nestjs/passport';
 import { IUserLoginDto, IUserRegisterDto } from 'src/domain/interfaces/auth';
 import { IUser } from 'src/domain/interfaces/user';
 import { IUserRole } from 'src/domain/interfaces/user_role';
-import { GetUserRoles } from 'src/helpers/decorators/get-user-roles.decorator';
-import { GetUser } from 'src/helpers/decorators/get-user.decorator';
-import { RowHeaders } from 'src/helpers/decorators/row-hearders.decorator';
+import { GetUserRoles } from 'src/common/auth/decorators/get-user-roles.decorator';
+import { GetUser } from 'src/common/auth/decorators/get-user.decorator';
+import { RowHeaders } from 'src/common/auth/decorators/row-hearders.decorator';
 import { AuthService } from 'src/infrastructure/auth.service';
-import { UserRoleGuard } from './guards/user-role.guard';
-import { RoleProtected } from 'src/helpers/decorators/role-protected.decorator';
-import { ValidRoles } from 'src/config/strategies/interfaces/valid-roles';
-import { Auth } from 'src/helpers/decorators/auth.decorator';
+import { UserRoleGuard } from '../../common/auth/guards/user-role.guard';
+import { RoleProtected } from 'src/common/auth/decorators/role-protected.decorator';
+import { ValidRoles } from 'src/common/constants/valid-roles';
+import { Auth } from 'src/common/auth/decorators/auth.decorator';
 
 @Controller('auth')
 export class AuthController {

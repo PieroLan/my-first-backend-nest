@@ -5,10 +5,11 @@ import { UserRepositoryImpl } from 'src/domain/repository/impl/user.repository.i
 import { UserService } from 'src/infrastructure/user.service';
 import { UserController } from './user.controller';
 import { UserRoleModule } from '../user-role/user-role.module';
+import { AuthCommonModule } from 'src/common/auth/auth-common.module';
 
 @Module({
   controllers: [UserController],
-  imports: [TypeOrmModule.forFeature([UserEntity]), UserRoleModule],
+  imports: [TypeOrmModule.forFeature([UserEntity]), UserRoleModule, AuthCommonModule],
   providers: [UserService, UserRepositoryImpl],
   exports: [UserService],
 })

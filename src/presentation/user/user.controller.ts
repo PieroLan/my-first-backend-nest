@@ -1,18 +1,25 @@
 import { Body, Controller, Get, HttpException, HttpStatus, Param, Patch, Post } from '@nestjs/common';
+import { Auth } from 'src/common/auth/decorators/auth.decorator';
+import { ValidRoles } from 'src/common/constants/valid-roles';
 import { IUserCreateDto, IUserUpdateDto } from 'src/domain/interfaces/user';
 import { UserService } from 'src/infrastructure/user.service';
 
 @Controller('user')
+@Auth(ValidRoles.admin)
 export class UserController {
-    constructor(private readonly userService: UserService) { }
-    
+  constructor(private readonly userService: UserService) { }
+
   @Get()
   async findAll() {
     const data = await this.userService.findAll();
     if (data.length === 0) {
       throw new HttpException('Usuarios no registrados', HttpStatus.NOT_FOUND);
     }
-    return data;
+    return {
+      status: HttpStatus.OK,
+      message: 'Usuarios encontrados',
+      data: data
+    };
   }
 
   @Get(':id')

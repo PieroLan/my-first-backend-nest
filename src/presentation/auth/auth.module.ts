@@ -7,12 +7,13 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtStrategy } from 'src/config/strategies/jwt.strategy';
 import { UserRoleModule } from '../user-role/user-role.module';
-import { UserRoleGuard } from './guards/user-role.guard';
+import { AuthCommonModule } from 'src/common/auth/auth-common.module';
 
 @Module({
     imports: [UserModule,
         UserRoleModule,
         ConfigModule,
+        AuthCommonModule,
         // Configuración de JWT
         PassportModule.register({ defaultStrategy: 'jwt' }),
 
@@ -28,8 +29,8 @@ import { UserRoleGuard } from './guards/user-role.guard';
             },
         })
     ],
-    providers: [JwtStrategy, AuthService, UserRoleGuard],
+    providers: [JwtStrategy, AuthService],
     controllers: [AuthController],
-    exports: [JwtStrategy, AuthService, PassportModule, JwtModule, UserRoleGuard],
+    exports: [AuthService, JwtModule],
 })
 export class AuthModule { }

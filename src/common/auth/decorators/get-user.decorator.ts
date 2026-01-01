@@ -1,5 +1,5 @@
 import { createParamDecorator, ExecutionContext, InternalServerErrorException } from "@nestjs/common";
-import { IUserJwtReturn } from "src/config/strategies/interfaces/user-jwt-return.interface";
+import { IUserJwtReturn } from "src/common/interfaces/jwt/user-jwt-return.interface";
 
 
 // la funcion createParamDecorator recibe un callback
